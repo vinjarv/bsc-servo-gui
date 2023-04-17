@@ -6,7 +6,7 @@ public partial class Stepper : Node
 {
     public bool simulated = false;
     [Export] int axis_number = -1;  // Axis number for serial interface
-    [Export] SerialHub serial_hub;
+    SerialHub serial_hub;
     protected int position_steps = 0;
     protected int requested_position_steps = 0;
     protected int velocity_steps = 0;
@@ -14,17 +14,21 @@ public partial class Stepper : Node
 
     public override void _Ready()
     {
-
+        var serial_hub_found = GetNode<Node>("/root/Control/SerialHub") as SerialHub;
+        if (serial_hub_found != null) {
+            serial_hub = serial_hub_found;
+        } else {
+            GD.Print("Stepper " + axis_number.ToString() + ": SerialHub not found");
+        }
     }
-    public override void _Process(double delta)
+    public override async void _Process(double delta)
     {
         if (serial_hub.connected) {
             ReadPosition();
-            
         }
     }
     private void ReadPosition(){
-        string response = serial_hub.Write(axis_number + "");
+        string response = serial_hub.Write(axis_number.ToString());
         if (response != "") {
             string[] parts = response.Split(' ');
             if (parts.Length != 2) {

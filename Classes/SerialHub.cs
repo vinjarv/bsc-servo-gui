@@ -40,8 +40,13 @@ public partial class SerialHub : Node
             return;
         }
         serialPort = new SerialPort(portName, baudrate);
+        serialPort.ReadTimeout = 5000;
+        serialPort.WriteTimeout = 1000;
         serialPort.Open();
         connected = true;
+        serialPort.ReadTimeout = 1000;
+        serialPort.RtsEnable = true; // Needed for Pi Pico driver
+        serialPort.DtrEnable = true;
         GD.Print("Connected to " + portName);
     }
     public void DisconnectSerialPort()
@@ -70,14 +75,19 @@ public partial class SerialHub : Node
 
     public string Write(string message)
     {
-        if (!connected)
-        {
+        try{
+            if (!connected)
+            {
+                return "";
+            }
+            serialPort.DiscardInBuffer();
+            serialPort.WriteLine(message);
+            return serialPort.ReadLine();
+        } catch (Exception e){
+            GD.Print("Serial error: " + e);
+            serialPort.Dispose();
+            connected = false;
             return "";
         }
-        serialPort.DiscardInBuffer();
-        serialPort.Write(message);
-        return serialPort.ReadLine();
     }
-
-
 }

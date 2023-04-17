@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxsthhvygejl8"]
+[gd_scene load_steps=5 format=3 uid="uid://cxsthhvygejl8"]
 
 [ext_resource type="Script" path="res://Control.cs" id="1_i841q"]
 [ext_resource type="Script" path="res://Classes/ServoAxis.cs" id="2_j7wws"]
+[ext_resource type="Script" path="res://Classes/SerialHub.cs" id="3_84bty"]
 
 [sub_resource type="SystemFont" id="SystemFont_0x6g4"]
 font_names = PackedStringArray("Monospace")
@@ -159,8 +160,14 @@ theme_override_font_sizes/font_size = 32
 text = "Axis 1
 "
 
-[node name="PattyServo" type="Node" parent="."]
+[node name="SerialHub" type="Node" parent="."]
+script = ExtResource("3_84bty")
+
+[node name="Axes" type="Node" parent="."]
+
+[node name="PattyServo" type="Node" parent="Axes"]
 script = ExtResource("2_j7wws")
+axis_number = 1
 
 [connection signal="pressed" from="Axis1/ConnectButton" to="." method="ConnectSerial"]
 [connection signal="value_changed" from="Axis1/VelocityEntry" to="." method="_on_velocity_entry_value_changed"]
