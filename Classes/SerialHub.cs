@@ -77,9 +77,7 @@ public partial class SerialHub : Node
     {
         try{
             if (!connected)
-            {
                 return "";
-            }
             serialPort.DiscardInBuffer();
             serialPort.WriteLine(message);
             return serialPort.ReadLine();

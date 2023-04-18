@@ -28,9 +28,18 @@ public partial class ServoAxis : Stepper
         GD.Print("Axis constructor");
     }
 
-//TODO implement all the methods
     public void SetAcceleration(float accel)
     {
         WriteAcceleration((int)(accel / units_per_rev * steps_per_rev));
+    }
+
+    public void SetVelocity(float vel)
+    {
+        WriteVelocity((int)(vel / units_per_rev * steps_per_rev));
+    }
+
+    public void Move(float pos)
+    {
+        WritePosition((int)(pos / units_per_rev * steps_per_rev));
     }
 }
