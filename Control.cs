@@ -22,4 +22,23 @@ public partial class Control : Godot.Control
 				serial_hub.ConnectSerialPort(ports[0]);
 		}
 	}
+
+	public override void _Input(InputEvent @event)
+{
+	if (serial_hub == null)
+		return;
+	if (!serial_hub.connected)
+		return;
+
+    if (@event.IsActionPressed("up"))
+    {
+        AxisJog axis = GetNode<AxisJog>("Axes/Patty1SliceServo/AxisJog");
+		axis._on_step_fwd_pressed();
+    } else if (@event.IsActionPressed("down"))
+	{
+		AxisJog axis = GetNode<AxisJog>("Axes/Patty1SliceServo/AxisJog");
+		axis._on_step_bwd_pressed();
+	}
+}
+
 }

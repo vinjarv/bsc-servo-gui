@@ -16,16 +16,15 @@ public partial class ServoAxis : Stepper
     }
     public float velocity {
         get { return (float)velocity_steps / steps_per_rev * units_per_rev; }
-        //set { velocity_steps = (int)(value / units_per_rev * steps_per_rev); }
+        // set { velocity_steps = (int)(value / units_per_rev * steps_per_rev); }
     }
     public float acceleration {
         get { return (float)acceleration_steps / steps_per_rev * units_per_rev; }
-        //set { acceleration_steps = (int)(value / units_per_rev * steps_per_rev); }
+        // set { acceleration_steps = (int)(value / units_per_rev * steps_per_rev); }
     }
 
     public ServoAxis()
     {
-        GD.Print("Axis constructor");
     }
 
     public void SetAcceleration(float accel)

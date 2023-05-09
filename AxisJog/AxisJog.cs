@@ -3,7 +3,6 @@ using System;
 
 public partial class AxisJog : Control
 {
-	[Export] float step_size = 10;
 	// Object references
 	private SerialHub serial_hub;
 	private ServoAxis axis;
@@ -11,6 +10,7 @@ public partial class AxisJog : Control
 	Label label_pos;
 	SpinBox spinbox_vel;
 	SpinBox spinbox_accel;
+	float step_size = 10;
 	public override void _Ready()
 	{
 		axis = GetParent<ServoAxis>();
@@ -21,6 +21,10 @@ public partial class AxisJog : Control
 		spinbox_accel = GetNode<SpinBox>("Axis1/AccelEntry");
 		
 		GetNode<Label>("Axis1/AxisLabel").Text = "Axis " + axis.axis_number.ToString();
+		axis.SetAcceleration((float)spinbox_accel.Value); // Set initial parameters from UI elements
+		axis.SetVelocity((float)spinbox_vel.Value);
+
+		step_size = (float)GetNode<SpinBox>("Axis1/StepSizeEntry").Value;
 	}
 
 	public override void _Process(double delta)
@@ -34,6 +38,9 @@ public partial class AxisJog : Control
 	}
 	public void _on_velocity_entry_value_changed(float val){
 		axis.SetVelocity(val);
+	}
+	public void _on_step_size_entry_value_changed(float val){
+		step_size = val;
 	}
 	public void _on_step_fwd_pressed(){
 		axis.Move(axis.position + step_size);

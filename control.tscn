@@ -18,28 +18,47 @@ metadata/_edit_lock_ = true
 
 [node name="Patty1FeedServo" type="Node" parent="Axes"]
 script = ExtResource("2_j7wws")
+units_per_rev = 60.0
 axis_number = 1
 
 [node name="AxisJog" parent="Axes/Patty1FeedServo" instance=ExtResource("3_sf8o3")]
-offset_left = 148.0
-offset_top = 18.0
-offset_right = 148.136
-offset_bottom = 17.848
-grow_horizontal = 1
-grow_vertical = 1
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 4.48798
+offset_bottom = 5.01599
 
 [node name="Patty1SliceServo" type="Node" parent="Axes"]
 script = ExtResource("2_j7wws")
+units_per_rev = 8.0
 axis_number = 2
 
 [node name="AxisJog" parent="Axes/Patty1SliceServo" instance=ExtResource("3_sf8o3")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 147.0
-offset_top = 344.0
-offset_right = -239.0
-offset_bottom = -8.0
+offset_left = 5.0
+offset_top = 330.0
+offset_right = 4.48798
+offset_bottom = 330.016
+
+[node name="Patty1SliceServo2" type="Node" parent="Axes"]
+script = ExtResource("2_j7wws")
+axis_number = 3
+
+[node name="AxisJog" parent="Axes/Patty1SliceServo2" instance=ExtResource("3_sf8o3")]
+visible = false
+offset_left = 515.0
+offset_top = 5.0
+offset_right = 514.488
+offset_bottom = 5.01599
+
+[node name="Patty1SliceServo3" type="Node" parent="Axes"]
+script = ExtResource("2_j7wws")
+axis_number = 4
+
+[node name="AxisJog" parent="Axes/Patty1SliceServo3" instance=ExtResource("3_sf8o3")]
+visible = false
+offset_left = 515.0
+offset_top = 330.0
+offset_right = 514.488
+offset_bottom = 330.016
 
 [node name="ConnectButton" type="Button" parent="."]
 layout_mode = 0
@@ -50,5 +69,3 @@ offset_bottom = 59.0
 text = "Connect"
 
 [connection signal="pressed" from="ConnectButton" to="." method="ConnectSerial"]
-
-[editable path="Axes/Patty1FeedServo/AxisJog"]
