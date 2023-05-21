@@ -632,3 +632,7 @@ func _on_pickup_button_pressed():
 func _on_step_write_pressed():
 	var new_state = step_edit.text.to_int()
 	state = new_state
+
+
+func _on_ketchup_retract_button_pressed():
+	ketchup_servo.Move(ketchup_servo.GetPosition() - ketchup_retract)

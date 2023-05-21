@@ -36,6 +36,7 @@ drag_to_rearrange_enabled = true
 tabs_rearrange_group = 0
 
 [node name="Sequence" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
 layout_mode = 2
 
 [node name="StartButton" type="Button" parent="MarginContainer/TabContainer/Sequence"]
@@ -134,7 +135,6 @@ layout_mode = 2
 layout_mode = 1
 
 [node name="Magazines" type="TabBar" parent="MarginContainer/TabContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("2_fuflt")
 
@@ -233,6 +233,14 @@ offset_right = 504.923
 offset_bottom = 416.923
 theme_override_font_sizes/font_size = 20
 text = "Write"
+
+[node name="RetractButton" type="Button" parent="MarginContainer/TabContainer/Magazines/KetchupServo"]
+offset_left = 416.923
+offset_top = 444.615
+offset_right = 504.923
+offset_bottom = 524.615
+theme_override_font_sizes/font_size = 20
+text = "Retract"
 
 [node name="BreadServo" type="Control" parent="MarginContainer/TabContainer/Magazines"]
 layout_mode = 3
@@ -733,6 +741,7 @@ text = "3000 RPM"
 [connection signal="pressed" from="MarginContainer/TabContainer/Sequence/StepWrite" to="." method="_on_step_write_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/Patty1FeedServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_patty1feed_position_write_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/KetchupServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_ketchup_position_write_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/KetchupServo/RetractButton" to="." method="_on_ketchup_retract_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/ZeroButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_zero_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/RetractButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_retract_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/ExtendButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_extend_button_pressed"]
