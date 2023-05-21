@@ -33,12 +33,13 @@ var start_requested : bool = false  # For signaling
 
 @export var patty_feed_amount_mm : float = 12.0		# Distance to feed per portion
 @export var ketchup_feed_amount_mm : float = 2.0 	# Distance to feed per portion
-@export var ketchup_feedrate : float = 1.0
+@export var ketchup_feedrate : float = 2.0
 @export var fast_feedrate : float = 600.0 			# mm/s for fast travel moves
 @export var slow_feedrate : float = 200.0 			# mm/s for slower travel moves (with burger assembly in tool)
 var ketchup_robot_feedrate
 var robot_tolerence = 1.0
 var servo_tolerence = 0.5
+var ketchup_retract = 3.0 # mm
 
 @onready var step_edit : LineEdit = $MarginContainer/TabContainer/Sequence/StepEdit
 
@@ -105,7 +106,7 @@ func _process(delta):
 			# Check that magazine level is large enough for vending
 			if patty1_feed_servo.GetPosition() + patty_feed_amount_mm > 0:
 				state_text = "Error: Level too low in patty magazine 1"
-			if ketchup_servo.GetPosition() + ketchup_feed_amount_mm > 0:
+			if ketchup_servo.GetPosition() + ketchup_feed_amount_mm + ketchup_retract > 0:
 				state_text = "Error: Level too low in ketchup magazine"
 			
 			# Check if any errors
@@ -503,13 +504,21 @@ func _process(delta):
 			state_text = "Adding ketchup"
 			# Get ketchup
 			robot.MoveVelocity(robot_positions.SAUCE1_P1, slow_feedrate)
+			
 			state = 131
 		131:
 			if robot.IsAt(robot_positions.SAUCE1_P1, robot_tolerence):
-				state = 132
-		132:
+				state = 10032
+		10032:
 			ketchup_servo.SetAcceleration(100)
 			ketchup_servo.SetVelocity(ketchup_feedrate)
+			ketchup_servo.Move(ketchup_servo.GetPosition() + ketchup_retract)
+			seq_timer.start(2.0)
+			state = 100033
+		10033:
+			if seq_timer.is_stopped():
+				state = 132
+		132:
 			ketchup_servo.Move(ketchup_servo.GetPosition() + ketchup_feed_amount_mm)
 			seq_timer.start(0.5) 							# Ketchup delay
 			state = 133
@@ -524,6 +533,13 @@ func _process(delta):
 				seq_timer.start(1)
 				state = 136
 		136:
+			if seq_timer.is_stopped():
+				state = 137
+		137:
+			ketchup_servo.Move(ketchup_servo.GetPosition() - ketchup_retract)
+			seq_timer.start(1)
+			state = 138
+		138:
 			if seq_timer.is_stopped():
 				state = 140
 
