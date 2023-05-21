@@ -7,7 +7,7 @@ public partial class Stepper : Control
     public bool simulated = false;
     [Export] public int node_id = 1; // Serial node ID
     [Export] public int axis_number = -1;  // Axis number for serial interface
-    [Export] public float read_frequency = 5.0f; // Hz
+    [Export] public float read_frequency = 12.0f; // Hz
     SerialHub serial_hub;
     protected int position_steps = 0;
     protected int requested_position_steps = 0;
@@ -22,17 +22,17 @@ public partial class Stepper : Control
     public override void _Ready()
     {
         serial_hub = (SerialHub)GetNode("/root/SerialHub"); // Get autoloaded node
+        AddChild(read_timer);
         read_timer.OneShot = true;
         read_timer.WaitTime = 1.0f / read_frequency;
         read_timer.Start();
-        AddChild(read_timer);
     }
-    public override async void _Process(double delta)
+    public override void _Process(double delta)
     {
         // Write parameters on connection
         if (serial_hub.connected && !connected_prev) {
-                WriteVelocity(velocity_steps);
-                WriteAcceleration(acceleration_steps);
+                WriteVelocitySteps(velocity_steps);
+                WriteAccelerationSteps(acceleration_steps);
         }
         connected_prev = serial_hub.connected;
 
@@ -64,17 +64,17 @@ public partial class Stepper : Control
             position_steps = response_position;
         }
     }
-    protected void WritePosition(int requested_position)
+    protected void WritePositionSteps(int requested_position)
     {
         requested_position_steps = requested_position;
         serial_hub.Write(node_id + " " + axis_number + " " + requested_position_steps);
     }
-    protected void WriteVelocity(int velocity)
+    protected void WriteVelocitySteps(int velocity)
     {
         velocity_steps = velocity;
         serial_hub.Write(node_id + " " + axis_number + " F" + velocity_steps);
     }
-    public void WriteAcceleration(int acceleration)
+    public void WriteAccelerationSteps(int acceleration)
     {
         acceleration_steps = acceleration;
         serial_hub.Write(node_id + " " + axis_number + " A" + acceleration_steps);

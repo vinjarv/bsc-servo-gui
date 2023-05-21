@@ -17,7 +17,6 @@ func _ready():
 
 func _process(delta):
 	servo_position_file = load("res://Positions/servo_positions.gd")
-	
 	servo_positions = servo_position_file.new()
 
 func _on_patty1feed_position_write_button_pressed():
@@ -35,7 +34,7 @@ func _on_bun_zero_button_pressed():
 	print("Bun dispenser axis zeroed")
 
 func _on_bun_retract_button_pressed():
-	bread_servo.WritePosition(servo_positions.BUN_RETRACTED)
+	bread_servo.Move(servo_positions.BUN_RETRACTED)
 
 func _on_bun_extend_button_pressed():
-	bread_servo.WritePosition(servo_positions.BUN_EXTENDED)
+	bread_servo.Move(servo_positions.BUN_EXTENDED)

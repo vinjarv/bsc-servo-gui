@@ -29,7 +29,7 @@ public partial class AxisJog : Control
 
 	public override void _Process(double delta)
 	{
-		label_pos.Text = axis.position.ToString();
+		label_pos.Text = axis.position_mm.ToString();
 	}
 
 	// UI callbacks
@@ -43,10 +43,10 @@ public partial class AxisJog : Control
 		step_size = val;
 	}
 	public void _on_step_fwd_pressed(){
-		axis.Move(axis.position + step_size);
+		axis.Move(axis.position_mm + step_size);
 	}
 	public void _on_step_bwd_pressed(){
-		axis.Move(axis.position - step_size);
+		axis.Move(axis.position_mm - step_size);
 	}
 }
 

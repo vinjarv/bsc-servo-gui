@@ -40,18 +40,30 @@ layout_mode = 2
 
 [node name="StartButton" type="Button" parent="MarginContainer/TabContainer/Sequence"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -46.5
-offset_top = -29.5
-offset_right = 46.5
-offset_bottom = 29.5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 47.0
+offset_right = -1005.0
+offset_bottom = -493.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "START"
+
+[node name="PickupButton" type="Button" parent="MarginContainer/TabContainer/Sequence"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 151.0
+offset_top = 47.0
+offset_right = -892.0
+offset_bottom = -494.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Picked up
+burger"
 
 [node name="StateMargin" type="MarginContainer" parent="MarginContainer/TabContainer/Sequence"]
 layout_mode = 1
@@ -97,6 +109,22 @@ layout_mode = 2
 size_flags_vertical = 1
 text = " 0 : Text here"
 autowrap_mode = 3
+
+[node name="StepEdit" type="LineEdit" parent="MarginContainer/TabContainer/Sequence"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 358.0
+offset_right = 172.0
+offset_bottom = 405.0
+placeholder_text = " Overwrite step"
+
+[node name="StepWrite" type="Button" parent="MarginContainer/TabContainer/Sequence"]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 358.0
+offset_right = 247.0
+offset_bottom = 405.0
+text = " Write"
 
 [node name="Robot" type="TabBar" parent="MarginContainer/TabContainer"]
 visible = false
@@ -416,7 +444,7 @@ offset_right = 907.0
 offset_bottom = 371.0
 scale = Vector2(0.65, 0.65)
 script = ExtResource("2_u76mn")
-units_per_rev = 144.0
+units_per_rev = 189.0
 axis_number = 1
 metadata/_edit_group_ = true
 
@@ -558,7 +586,7 @@ offset_top = 529.23
 offset_right = 94.9999
 offset_bottom = 609.23
 theme_override_font_sizes/font_size = 20
-text = "Retract"
+text = "Close"
 
 [node name="OpenButton" type="Button" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
 layout_mode = 1
@@ -568,7 +596,7 @@ offset_top = 529.23
 offset_right = 504.231
 offset_bottom = 609.23
 theme_override_font_sizes/font_size = 20
-text = "Extend"
+text = "Open"
 
 [node name="DirectionLabel" type="Label" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
 layout_mode = 0
@@ -701,6 +729,8 @@ size_flags_vertical = 8
 text = "3000 RPM"
 
 [connection signal="pressed" from="MarginContainer/TabContainer/Sequence/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Sequence/PickupButton" to="." method="_on_pickup_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Sequence/StepWrite" to="." method="_on_step_write_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/Patty1FeedServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_patty1feed_position_write_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/KetchupServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_ketchup_position_write_button_pressed"]
 [connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/ZeroButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_zero_button_pressed"]

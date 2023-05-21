@@ -32,22 +32,22 @@ func _on_gripper_zero_button_pressed():
 	print("Oven lift axis zeroed")
 
 func _on_patty1_slice_retract_button_pressed():
-	patty1_slice_servo.WritePosition(servo_positions.PATTY1_SLICE_RETRACTED)
+	patty1_slice_servo.Move(servo_positions.PATTY1_SLICE_RETRACTED)
 
 func _on_patty1_slice_extend_button_pressed():
-	patty1_slice_servo.WritePosition(servo_positions.PATTY1_SLICE_EXTENDED)
+	patty1_slice_servo.Move(servo_positions.PATTY1_SLICE_EXTENDED)
 
 func _on_oven_down_pos_button_pressed():
-	oven_servo.WritePosition(servo_positions.OVEN_BOTTOM)
+	oven_servo.Move(servo_positions.OVEN_BOTTOM)
 
 func _on_oven_ready_pos_button_pressed():
-	oven_servo.WritePosition(servo_positions.OVEN_READY)
+	oven_servo.Move(servo_positions.OVEN_READY)
 
 func _on_oven_cook_pos_button_pressed():
-	oven_servo.WritePosition(servo_positions.OVEN_COOK)
+	oven_servo.Move(servo_positions.OVEN_COOK)
 
 func _on_gripper_close_button_pressed():
-	gripper_servo.WritePosition(servo_positions.GRIPPER_CLOSED)
+	gripper_servo.Move(servo_positions.GRIPPER_CLOSED)
 
 func _on_gripper_open_button_pressed():
-	gripper_servo.WritePosition(servo_positions.GRIPPER_OPEN)
+	gripper_servo.Move(servo_positions.GRIPPER_OPEN)

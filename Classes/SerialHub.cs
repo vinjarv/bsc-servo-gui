@@ -8,6 +8,8 @@ public partial class SerialHub : Node
     public bool connected = false;
     string portName = "";
     [Export] int baudrate = 115200;
+    private static Mutex mut = new Mutex();
+    long receive_timeout_ms = 2;
     public override void _Ready()
     {
 
@@ -75,16 +77,34 @@ public partial class SerialHub : Node
 
     public string Write(string message)
     {
+        string[] parts = message.Split(' ');
+        int node_id = parts[0].ToInt();
+        mut.Lock();
         try{
-            if (!connected)
+            if (!connected){
+                mut.Unlock();
                 return "";
+            }
             serialPort.DiscardInBuffer();
+            long send_timestamp_ms = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
             serialPort.WriteLine(message);
-            return serialPort.ReadLine();
+            while (true) {
+                // Read from serial port until data received from correct node, or timeout
+                string reply = serialPort.ReadLine();
+                reply = reply.Trim();
+                string[] reply_parts = reply.Split(' ');
+                int reply_node = (int)reply_parts[0].ToFloat();
+                long timestamp_now_ms = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                if (reply_node == node_id || (timestamp_now_ms - send_timestamp_ms < 10)){
+                    mut.Unlock();
+                    return reply;
+                }
+            }
         } catch (Exception e){
             GD.Print("Serial error: " + e);
-            serialPort.Dispose();
-            connected = false;
+            // serialPort.Dispose();
+            // connected = false;
+            mut.Unlock();
             return "";
         }
     }

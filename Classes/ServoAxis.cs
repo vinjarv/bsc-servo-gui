@@ -6,7 +6,7 @@ public partial class ServoAxis : Stepper
     [Export] int steps_per_rev = 1600;
     [Export] float units_per_rev = 5.0f;
 
-    public float position {
+    public float position_mm {
         get { return (float)position_steps / steps_per_rev * units_per_rev; }
         //set { position_steps = (int)(value / units_per_rev * steps_per_rev); }
     }
@@ -29,17 +29,17 @@ public partial class ServoAxis : Stepper
 
     public void SetAcceleration(float accel)
     {
-        WriteAcceleration((int)(accel / units_per_rev * steps_per_rev));
+        WriteAccelerationSteps((int)(accel / units_per_rev * steps_per_rev));
     }
 
     public void SetVelocity(float vel)
     {
-        WriteVelocity((int)(vel / units_per_rev * steps_per_rev));
+        WriteVelocitySteps((int)(vel / units_per_rev * steps_per_rev));
     }
 
     public void Move(float pos)
     {
-        WritePosition((int)(pos / units_per_rev * steps_per_rev));
+        WritePositionSteps((int)(pos / units_per_rev * steps_per_rev));
     }
 
     public void ResetPosition(float pos)
@@ -49,6 +49,10 @@ public partial class ServoAxis : Stepper
 
     public bool IsAt(float pos, float tolerence = 0.5f)
     {
-        return Mathf.Abs(pos - position) < tolerence;
+        return Mathf.Abs(pos - position_mm) < tolerence;
+    }
+    public float GetPosition()
+    {
+        return position_mm;
     }
 }
