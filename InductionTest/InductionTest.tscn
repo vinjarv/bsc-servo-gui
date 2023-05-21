@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpm1uvruich75"]
+
+[ext_resource type="Script" path="res://InductionTest/InductionTest.gd" id="1_78lqu"]
+[ext_resource type="PackedScene" uid="uid://cnejel3ncsgcn" path="res://InductionControl/InductionControl.tscn" id="1_cevnl"]
+
+[node name="InductionTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_78lqu")
+
+[node name="InductionControl" parent="." instance=ExtResource("1_cevnl")]
+layout_mode = 1
+anchor_left = 0.155382
+anchor_top = 0.322531
+anchor_right = 0.424479
+anchor_bottom = 0.615741
+
+[node name="InductionControl2" parent="." instance=ExtResource("1_cevnl")]
+layout_mode = 1
+anchor_left = 0.519965
+anchor_top = 0.322531
+anchor_right = 0.789062
+anchor_bottom = 0.615741
+node_id = 6

@@ -2,10 +2,12 @@ using Godot;
 
 // Stepper motor operation
 // Real motor through serial interface, or simulated
-public partial class Stepper : Node
+public partial class Stepper : Control
 {
     public bool simulated = false;
+    [Export] public int node_id = 1; // Serial node ID
     [Export] public int axis_number = -1;  // Axis number for serial interface
+    [Export] public float read_frequency = 5.0f; // Hz
     SerialHub serial_hub;
     protected int position_steps = 0;
     protected int requested_position_steps = 0;
@@ -15,10 +17,15 @@ public partial class Stepper : Node
         get { return position_steps == requested_position_steps; }
     }
     private bool connected_prev = false;
+    private Timer read_timer = new Timer();
 
     public override void _Ready()
     {
         serial_hub = (SerialHub)GetNode("/root/SerialHub"); // Get autoloaded node
+        read_timer.OneShot = true;
+        read_timer.WaitTime = 1.0f / read_frequency;
+        read_timer.Start();
+        AddChild(read_timer);
     }
     public override async void _Process(double delta)
     {
@@ -29,21 +36,27 @@ public partial class Stepper : Node
         }
         connected_prev = serial_hub.connected;
 
-        // Update position
-        if (serial_hub.connected) {
+        // Update position at fixed rate
+        if (serial_hub.connected && read_timer.IsStopped()) {
             ReadPosition();
+            read_timer.Start();
         }
     }
     protected void ReadPosition(){
-        string response = serial_hub.Write(axis_number.ToString());
+        string response = serial_hub.Write(node_id + " " + axis_number.ToString());
         if (response != "") {
             string[] parts = response.Split(' ');
-            if (parts.Length != 2) {
+            if (parts.Length != 3) {
                 GD.Print("[Axis " + axis_number.ToString() + "]: " + "Invalid response from serial hub - too short. " + response);
                 return;
             }
-            int response_axis = parts[0].ToInt();
-            int response_position = parts[1].ToInt(); 
+            int response_node_id = parts[0].ToInt();
+            if (response_node_id != node_id) {
+                GD.Print("[Axis " + axis_number.ToString() + "]: " + "Invalid response from serial hub - wrong node ID. " + response);
+                return;
+            }
+            int response_axis = parts[1].ToInt();
+            int response_position = parts[2].ToInt(); 
             if (response_axis != axis_number) {
                 GD.Print("[Axis " + axis_number.ToString() + "]: " + "Invalid response from serial hub - wrong axis. " + response);
                 return;
@@ -54,16 +67,22 @@ public partial class Stepper : Node
     protected void WritePosition(int requested_position)
     {
         requested_position_steps = requested_position;
-        serial_hub.Write(axis_number + " " + requested_position_steps);
+        serial_hub.Write(node_id + " " + axis_number + " " + requested_position_steps);
     }
     protected void WriteVelocity(int velocity)
     {
         velocity_steps = velocity;
-        serial_hub.Write(axis_number + " F" + velocity_steps);
+        serial_hub.Write(node_id + " " + axis_number + " F" + velocity_steps);
     }
     public void WriteAcceleration(int acceleration)
     {
         acceleration_steps = acceleration;
-        serial_hub.Write(axis_number + " A" + acceleration_steps);
+        serial_hub.Write(node_id + " " + axis_number + " A" + acceleration_steps);
+    }
+    protected void ResetPositionSteps(int new_position)
+    {
+        serial_hub.Write(node_id + " " + axis_number + " W" + new_position);
+        position_steps = new_position;
+        requested_position_steps = new_position;
     }
 }

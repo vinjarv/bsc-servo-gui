@@ -19,7 +19,7 @@ public partial class Control : Godot.Control
 		if (!serial_hub.connected){
 			string[] ports = serial_hub.GetSerialPorts();
 			if (ports.Length > 0)
-				serial_hub.ConnectSerialPort(ports[0]);
+				serial_hub.ConnectSerialPort(ports[ports.Length - 1]); // Try last port
 		}
 	}
 

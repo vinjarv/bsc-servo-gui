@@ -1,0 +1,359 @@
+[gd_scene load_steps=5 format=3 uid="uid://c64cmvymdv1o7"]
+
+[ext_resource type="Script" path="res://RobotTest/RobotControl.cs" id="1_bioab"]
+[ext_resource type="Script" path="res://Classes/Robot.cs" id="2_gdkfp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vvble"]
+bg_color = Color(0.298039, 0.298039, 0.298039, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.372549, 0.372549, 0.372549, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dm21n"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.372549, 0.372549, 0.372549, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="RobotTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bioab")
+
+[node name="Robot" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_gdkfp")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -186.0
+offset_right = 345.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vvble")
+
+[node name="StatusLabel" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 9.0
+offset_right = 410.0
+offset_bottom = 57.0
+theme_override_font_sizes/font_size = 30
+text = "Robot State: Disconnected"
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 0
+offset_left = 297.0
+offset_top = 90.0
+offset_right = 654.0
+offset_bottom = 354.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dm21n")
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="Step" type="VBoxContainer" parent="Panel/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="XStep" type="Control" parent="Panel/Panel/MarginContainer/Step"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel/MarginContainer/Step/XStep"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="XMinus10" type="Button" parent="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-X 10
+"
+
+[node name="XMinus1" type="Button" parent="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-X 1
+"
+
+[node name="XPlus1" type="Button" parent="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+X 1
+"
+
+[node name="XPlus10" type="Button" parent="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+X 10"
+
+[node name="YStep" type="Control" parent="Panel/Panel/MarginContainer/Step"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel/MarginContainer/Step/YStep"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="YMinus10" type="Button" parent="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-Y 10
+"
+
+[node name="YMinus1" type="Button" parent="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-Y 1
+"
+
+[node name="YPlus1" type="Button" parent="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+Y 1
+"
+
+[node name="YPlus10" type="Button" parent="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+Y 10"
+
+[node name="ZStep" type="Control" parent="Panel/Panel/MarginContainer/Step"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel/MarginContainer/Step/ZStep"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="ZMinus10" type="Button" parent="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-Z 10
+"
+
+[node name="ZMinus1" type="Button" parent="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "-Z 1
+"
+
+[node name="ZPlus1" type="Button" parent="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+Z 1
+"
+
+[node name="ZPlus10" type="Button" parent="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "+Z 10"
+
+[node name="DRO" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 118.0
+offset_right = 210.0
+offset_bottom = 256.0
+theme_override_constants/separation = 25
+
+[node name="DRO_X" type="Control" parent="Panel/DRO"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/DRO/DRO_X"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="XLabel" type="Label" parent="Panel/DRO/DRO_X/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBG" type="Panel" parent="Panel/DRO/DRO_X/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Panel/DRO/DRO_X/HBoxContainer/LabelBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "000.00"
+vertical_alignment = 1
+clip_text = true
+
+[node name="DRO_Y" type="Control" parent="Panel/DRO"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/DRO/DRO_Y"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="YLabel" type="Label" parent="Panel/DRO/DRO_Y/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Y
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBG" type="Panel" parent="Panel/DRO/DRO_Y/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Panel/DRO/DRO_Y/HBoxContainer/LabelBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "000.00"
+vertical_alignment = 1
+clip_text = true
+
+[node name="DRO_Z" type="Control" parent="Panel/DRO"]
+layout_mode = 2
+size_flags_vertical = 3
+metadata/_edit_group_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/DRO/DRO_Z"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ZLabel" type="Label" parent="Panel/DRO/DRO_Z/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Z"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelBG" type="Panel" parent="Panel/DRO/DRO_Z/HBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+metadata/_edit_group_ = true
+
+[node name="Label" type="Label" parent="Panel/DRO/DRO_Z/HBoxContainer/LabelBG"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "000.00"
+vertical_alignment = 1
+clip_text = true
+
+[node name="StatusLight" type="ColorRect" parent="Panel"]
+layout_mode = 0
+offset_left = 625.0
+offset_top = 19.0
+offset_right = 665.0
+offset_bottom = 59.0
+color = Color(1, 0, 0, 1)
+
+[node name="JogEnable" type="CheckButton" parent="Panel"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 292.0
+offset_right = 191.0
+offset_bottom = 346.0
+text = "Keyboard
+jog enable
+"
+
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer/XMinus10" to="." method="_on_x_minus_10_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer/XMinus1" to="." method="_on_x_minus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer/XPlus1" to="." method="_on_x_plus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/XStep/HBoxContainer/XPlus10" to="." method="_on_x_plus_10_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer/YMinus10" to="." method="_on_y_minus_10_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer/YMinus1" to="." method="_on_y_minus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer/YPlus1" to="." method="_on_y_plus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/YStep/HBoxContainer/YPlus10" to="." method="_on_y_plus_10_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer/ZMinus10" to="." method="_on_z_minus_10_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer/ZMinus1" to="." method="_on_z_minus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer/ZPlus1" to="." method="_on_z_plus_1_pressed"]
+[connection signal="pressed" from="Panel/Panel/MarginContainer/Step/ZStep/HBoxContainer/ZPlus10" to="." method="_on_z_plus_10_pressed"]

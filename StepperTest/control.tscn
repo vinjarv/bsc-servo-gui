@@ -1,0 +1,157 @@
+[gd_scene load_steps=4 format=3 uid="uid://bxp0bhkk4li6s"]
+
+[ext_resource type="Script" path="res://StepperTest/Control.cs" id="1_ej662"]
+[ext_resource type="Script" path="res://Classes/ServoAxis.cs" id="2_om7tg"]
+[ext_resource type="PackedScene" uid="uid://jwetvv37ekj1" path="res://AxisJog/AxisJog.tscn" id="3_n4486"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ej662")
+metadata/_edit_lock_ = true
+
+[node name="Axes" type="Node" parent="."]
+
+[node name="Patty1FeedServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = -639.0
+offset_bottom = -327.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 150.8
+axis_number = 5
+
+[node name="AxisJog" parent="Axes/Patty1FeedServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Label" type="Label" parent="Axes/Patty1FeedServo"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Patty1SliceServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchor_right = 0.196
+anchor_bottom = 0.181
+offset_left = 13.0
+offset_top = 224.0
+offset_right = 291.208
+offset_bottom = 419.712
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 10.667
+axis_number = 6
+
+[node name="AxisJog" parent="Axes/Patty1SliceServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="OvenServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 504.0
+offset_bottom = 313.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 144.0
+axis_number = 1
+
+[node name="AxisJog" parent="Axes/OvenServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 678.462
+offset_right = 20.0
+offset_bottom = 678.462
+
+[node name="BreadServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 384.0
+offset_top = 10.0
+offset_right = 888.0
+offset_bottom = 323.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 15.0
+axis_number = 4
+
+[node name="AxisJog" parent="Axes/BreadServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="KetchupServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 384.0
+offset_top = 224.0
+offset_right = 888.0
+offset_bottom = 537.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 4.121
+axis_number = 3
+
+[node name="AxisJog" parent="Axes/KetchupServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="BurgerGripperServo" type="Control" parent="Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 384.0
+offset_top = 441.0
+offset_right = 888.0
+offset_bottom = 754.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_om7tg")
+units_per_rev = 125.685
+axis_number = 2
+
+[node name="AxisJog" parent="Axes/BurgerGripperServo" instance=ExtResource("3_n4486")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="ConnectButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1031.0
+offset_top = 18.0
+offset_right = 1138.0
+offset_bottom = 59.0
+text = "Connect"
+
+[connection signal="pressed" from="ConnectButton" to="." method="ConnectSerial"]

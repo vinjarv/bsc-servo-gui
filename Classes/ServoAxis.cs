@@ -41,4 +41,14 @@ public partial class ServoAxis : Stepper
     {
         WritePosition((int)(pos / units_per_rev * steps_per_rev));
     }
+
+    public void ResetPosition(float pos)
+    {
+        ResetPositionSteps((int)(pos / units_per_rev * steps_per_rev));
+    }
+
+    public bool IsAt(float pos, float tolerence = 0.5f)
+    {
+        return Mathf.Abs(pos - position) < tolerence;
+    }
 }

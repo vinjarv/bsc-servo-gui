@@ -1,0 +1,199 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnejel3ncsgcn"]
+
+[ext_resource type="Script" path="res://Classes/Induction.cs" id="1_aupin"]
+[ext_resource type="Script" path="res://InductionControl/InductionControl.cs" id="2_fp03u"]
+
+[node name="InductionControl" type="Control"]
+layout_mode = 3
+anchor_right = 0.269097
+anchor_bottom = 0.29321
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aupin")
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("2_fp03u")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_right = -130.0
+offset_bottom = -159.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "Induction cooktop"
+
+[node name="HSeparator" type="HSeparator" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 130.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 140.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="0Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "   0 % "
+
+[node name="25Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "  25 % "
+
+[node name="50Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "  50 % "
+
+[node name="75Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "  75 % "
+
+[node name="100Button" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = " 100 % "
+
+[node name="PowerBar" type="ProgressBar" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 267.0
+offset_top = 37.0
+offset_right = -10.0
+offset_bottom = -76.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 2000.0
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PowerLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 182.0
+offset_top = 37.0
+offset_right = -51.0
+offset_bottom = -101.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Current 
+power:"
+
+[node name="PowerDisplay" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 182.0
+offset_top = 89.0
+offset_right = -51.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 W"
+
+[node name="StateLabel" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 37.0
+offset_right = -188.0
+offset_bottom = -127.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Current state:"
+
+[node name="StateDisplay" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 63.0
+offset_right = -219.0
+offset_bottom = -101.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "-1
+"
+
+[node name="StateColor" type="ColorRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 284.0
+offset_top = 8.0
+offset_right = -10.0
+offset_bottom = -166.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="DetectButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 95.0
+offset_right = -229.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Detect"
+
+[node name="Panel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 86.0
+offset_top = 95.0
+offset_right = -169.0
+offset_bottom = -64.0
+metadata/_edit_group_ = true
+
+[node name="DetectLabel" type="Label" parent="Panel/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = " 0"
+vertical_alignment = 1
+
+[connection signal="pressed" from="Panel/HBoxContainer/0Button" to="Panel" method="_on_0_button_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/25Button" to="Panel" method="_on_25_button_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/50Button" to="Panel" method="_on_50_button_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/75Button" to="Panel" method="_on_75_button_pressed"]
+[connection signal="pressed" from="Panel/HBoxContainer/100Button" to="Panel" method="_on_100_button_pressed"]
+[connection signal="pressed" from="Panel/DetectButton" to="Panel" method="_on_detect_button_pressed"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2o7stpcgymmc"]
+
+[ext_resource type="Script" path="res://StateTest/StateTest.gd" id="1_xoa5a"]
+[ext_resource type="Script" path="res://Classes/Robot.cs" id="2_xw3rg"]
+
+[node name="StateTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xoa5a")
+
+[node name="SpinBox" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 212.0
+offset_right = 658.0
+offset_bottom = 277.0
+max_value = 100000.0
+
+[node name="Robot" type="Node" parent="."]
+script = ExtResource("2_xw3rg")
+
+[connection signal="value_changed" from="SpinBox" to="." method="_on_spin_box_value_changed"]

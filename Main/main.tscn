@@ -1,0 +1,719 @@
+[gd_scene load_steps=9 format=3 uid="uid://cea7sfo413n3w"]
+
+[ext_resource type="PackedScene" uid="uid://c64cmvymdv1o7" path="res://RobotTest/RobotTest.tscn" id="1_0lfmp"]
+[ext_resource type="Script" path="res://Main/main.gd" id="1_r4llh"]
+[ext_resource type="Script" path="res://Main/Magazines.gd" id="2_fuflt"]
+[ext_resource type="Script" path="res://Classes/ServoAxis.cs" id="2_u76mn"]
+[ext_resource type="PackedScene" uid="uid://jwetvv37ekj1" path="res://AxisJog/AxisJog.tscn" id="3_xoty8"]
+[ext_resource type="PackedScene" uid="uid://cnejel3ncsgcn" path="res://InductionControl/InductionControl.tscn" id="4_b2xxb"]
+[ext_resource type="Script" path="res://Main/Axes.gd" id="5_f3sfv"]
+[ext_resource type="Script" path="res://Classes/Fan.cs" id="8_4hxnk"]
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r4llh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+drag_to_rearrange_enabled = true
+tabs_rearrange_group = 0
+
+[node name="Sequence" type="TabBar" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+
+[node name="StartButton" type="Button" parent="MarginContainer/TabContainer/Sequence"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.5
+offset_top = -29.5
+offset_right = 46.5
+offset_bottom = 29.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "START"
+
+[node name="StateMargin" type="MarginContainer" parent="MarginContainer/TabContainer/Sequence"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -566.0
+offset_top = -72.0
+offset_right = 566.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 10
+
+[node name="StatePanel" type="Panel" parent="MarginContainer/TabContainer/Sequence/StateMargin"]
+layout_mode = 2
+
+[node name="StateDescription" type="Label" parent="MarginContainer/TabContainer/Sequence/StateMargin/StatePanel"]
+layout_mode = 2
+offset_top = -34.0
+offset_right = 281.0
+theme_override_font_sizes/font_size = 20
+text = " Current machine state:"
+
+[node name="StatePanelMargin" type="MarginContainer" parent="MarginContainer/TabContainer/Sequence/StateMargin/StatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="StateLabel" type="Label" parent="MarginContainer/TabContainer/Sequence/StateMargin/StatePanel/StatePanelMargin"]
+layout_mode = 2
+size_flags_vertical = 1
+text = " 0 : Text here"
+autowrap_mode = 3
+
+[node name="Robot" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="RobotTest" parent="MarginContainer/TabContainer/Robot" instance=ExtResource("1_0lfmp")]
+layout_mode = 1
+
+[node name="Magazines" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("2_fuflt")
+
+[node name="Patty1FeedServo" type="Control" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 58.0
+offset_right = -583.0
+offset_bottom = -227.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 150.8
+axis_number = 5
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Magazines/Patty1FeedServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Magazines/Patty1FeedServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Patty 1 Feed"
+
+[node name="PositionInput" type="LineEdit" parent="MarginContainer/TabContainer/Magazines/Patty1FeedServo"]
+layout_mode = 0
+offset_top = 337.0
+offset_right = 398.0
+offset_bottom = 417.0
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter new level in mm"
+caret_blink = true
+
+[node name="PositionWriteButton" type="Button" parent="MarginContainer/TabContainer/Magazines/Patty1FeedServo"]
+layout_mode = 0
+offset_left = 416.923
+offset_top = 336.923
+offset_right = 504.923
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Write"
+
+[node name="KetchupServo" type="Control" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 403.0
+offset_top = 58.0
+offset_right = 907.0
+offset_bottom = 371.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 4.121
+axis_number = 3
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Magazines/KetchupServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Magazines/KetchupServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Ketchup"
+
+[node name="PositionInput" type="LineEdit" parent="MarginContainer/TabContainer/Magazines/KetchupServo"]
+layout_mode = 0
+offset_top = 337.0
+offset_right = 398.0
+offset_bottom = 417.0
+theme_override_font_sizes/font_size = 20
+placeholder_text = "Enter new level in mm"
+caret_blink = true
+
+[node name="PositionWriteButton" type="Button" parent="MarginContainer/TabContainer/Magazines/KetchupServo"]
+layout_mode = 0
+offset_left = 416.923
+offset_top = 336.923
+offset_right = 504.923
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Write"
+
+[node name="BreadServo" type="Control" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 762.0
+offset_top = 58.0
+offset_right = 1266.0
+offset_bottom = 371.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 15.0
+axis_number = 4
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Magazines/BreadServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Bun Dispenser"
+
+[node name="ZeroButton" type="Button" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.000244141
+offset_top = 336.923
+offset_right = 94.9998
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Zero
+Position"
+
+[node name="ZeroLabel" type="Label" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 337.0
+offset_right = 505.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 20
+text = "Zero position set at:
+Contact between carriage and bearing block (fully retracted)"
+autowrap_mode = 3
+
+[node name="RetractButton" type="Button" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.00012207
+offset_top = 529.23
+offset_right = 94.9999
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Retract"
+
+[node name="ExtendButton" type="Button" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 409.231
+offset_top = 529.23
+offset_right = 504.231
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Extend"
+
+[node name="DirectionLabel" type="Label" parent="MarginContainer/TabContainer/Magazines/BreadServo"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 445.0
+offset_right = 505.0
+offset_bottom = 509.0
+theme_override_font_sizes/font_size = 20
+text = "Positive direction towards magazine"
+autowrap_mode = 3
+
+[node name="MagazineInfoLabel" type="Label" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 355.0
+offset_right = 731.0
+offset_bottom = 448.0
+theme_override_font_sizes/font_size = 16
+text = "Magazines should be set to current level after filling. 
+Zero position at empty, positive direction feeds out."
+autowrap_mode = 3
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 373.0
+offset_top = 58.0
+offset_right = -729.0
+offset_bottom = -266.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/TabContainer/Magazines"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 731.0
+offset_top = 58.0
+offset_right = -370.0
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Axes" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("5_f3sfv")
+
+[node name="Patty1SliceServo" type="Control" parent="MarginContainer/TabContainer/Axes"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 45.0
+offset_top = 58.0
+offset_right = 550.0
+offset_bottom = 372.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 10.667
+axis_number = 6
+metadata/_edit_group_ = true
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Patty 1 Slicer"
+
+[node name="ZeroButton" type="Button" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.000244141
+offset_top = 336.923
+offset_right = 94.9998
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Zero
+Position"
+
+[node name="ZeroLabel" type="Label" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 337.0
+offset_right = 505.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 20
+text = "Zero position set at:
+Slicer plate fully retracted under magazine"
+autowrap_mode = 3
+
+[node name="RetractButton" type="Button" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.00012207
+offset_top = 529.23
+offset_right = 94.9999
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Retract"
+
+[node name="ExtendButton" type="Button" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 409.231
+offset_top = 529.23
+offset_right = 504.231
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Extend"
+
+[node name="DirectionLabel" type="Label" parent="MarginContainer/TabContainer/Axes/Patty1SliceServo"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 445.0
+offset_right = 505.0
+offset_bottom = 509.0
+theme_override_font_sizes/font_size = 20
+text = "Positive direction away/out from magazine"
+autowrap_mode = 3
+
+[node name="OvenServo" type="Control" parent="MarginContainer/TabContainer/Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 403.0
+offset_top = 58.0001
+offset_right = 907.0
+offset_bottom = 371.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 144.0
+axis_number = 1
+metadata/_edit_group_ = true
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Axes/OvenServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Bottom Cooktop"
+
+[node name="ZeroButton" type="Button" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.000244141
+offset_top = 336.923
+offset_right = 94.9998
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Zero
+Position"
+
+[node name="ZeroLabel" type="Label" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 337.0
+offset_right = 505.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 20
+text = "Zero position set at:
+Slight contact between both lifter arms and bottom plate"
+autowrap_mode = 3
+
+[node name="DownPosButton" type="Button" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.00012207
+offset_top = 529.23
+offset_right = 94.9999
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Down"
+
+[node name="ReadyPosButton" type="Button" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 204.615
+offset_top = 529.231
+offset_right = 299.615
+offset_bottom = 609.231
+theme_override_font_sizes/font_size = 20
+text = "Ready"
+
+[node name="CookPosButton" type="Button" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 409.231
+offset_top = 529.23
+offset_right = 504.231
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Cooking
+"
+
+[node name="DirectionLabel" type="Label" parent="MarginContainer/TabContainer/Axes/OvenServo"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 445.0
+offset_right = 505.0
+offset_bottom = 509.0
+theme_override_font_sizes/font_size = 20
+text = "Positive direction lifts cooktop"
+autowrap_mode = 3
+
+[node name="BurgerGripperServo" type="Control" parent="MarginContainer/TabContainer/Axes"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 762.0
+offset_top = 58.0
+offset_right = 1266.0
+offset_bottom = 371.0
+scale = Vector2(0.65, 0.65)
+script = ExtResource("2_u76mn")
+units_per_rev = 125.685
+axis_number = 2
+metadata/_edit_group_ = true
+
+[node name="AxisJog" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo" instance=ExtResource("3_xoty8")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 0
+offset_top = -58.4618
+offset_right = 215.0
+offset_bottom = -0.461792
+theme_override_font_sizes/font_size = 40
+text = "Burger Gripper"
+
+[node name="ZeroButton" type="Button" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.000244141
+offset_top = 336.923
+offset_right = 94.9998
+offset_bottom = 416.923
+theme_override_font_sizes/font_size = 20
+text = "Zero
+Position"
+
+[node name="ZeroLabel" type="Label" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 0
+offset_left = 189.0
+offset_top = 337.0
+offset_right = 505.0
+offset_bottom = 430.0
+theme_override_font_sizes/font_size = 20
+text = "Zero position set at:
+Gripper fully closed"
+autowrap_mode = 3
+
+[node name="CloseButton" type="Button" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = -0.00012207
+offset_top = 529.23
+offset_right = 94.9999
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Retract"
+
+[node name="OpenButton" type="Button" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 409.231
+offset_top = 529.23
+offset_right = 504.231
+offset_bottom = 609.23
+theme_override_font_sizes/font_size = 20
+text = "Extend"
+
+[node name="DirectionLabel" type="Label" parent="MarginContainer/TabContainer/Axes/BurgerGripperServo"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 445.0
+offset_right = 505.0
+offset_bottom = 509.0
+theme_override_font_sizes/font_size = 20
+text = "Positive direction closes gripper"
+autowrap_mode = 3
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/TabContainer/Axes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 373.0
+offset_top = 58.0
+offset_right = -729.0
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/TabContainer/Axes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 731.0
+offset_top = 58.0
+offset_right = -370.0
+offset_bottom = -143.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Cooktops" type="TabBar" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="UpperInduction" parent="MarginContainer/TabContainer/Cooktops" instance=ExtResource("4_b2xxb")]
+layout_mode = 1
+anchor_left = 0.0715548
+anchor_top = 0.137353
+anchor_right = 0.340989
+anchor_bottom = 0.447236
+node_id = 6
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Cooktops/UpperInduction"]
+layout_mode = 0
+offset_top = -45.0
+offset_right = 215.0
+theme_override_font_sizes/font_size = 30
+text = "Top
+"
+
+[node name="LowerInduction" parent="MarginContainer/TabContainer/Cooktops" instance=ExtResource("4_b2xxb")]
+layout_mode = 1
+anchor_left = 0.381138
+anchor_top = 0.137797
+anchor_right = 0.651138
+anchor_bottom = 0.446797
+offset_left = 0.552002
+offset_top = -0.265015
+offset_right = -0.0880737
+offset_bottom = 0.261963
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Cooktops/LowerInduction"]
+layout_mode = 0
+offset_top = -45.0
+offset_right = 215.0
+theme_override_font_sizes/font_size = 30
+text = "Bottom
+"
+
+[node name="ExtractionFan" type="Control" parent="MarginContainer/TabContainer/Cooktops"]
+layout_mode = 1
+anchor_left = 0.697767
+anchor_top = 0.137849
+anchor_right = 0.93153
+anchor_bottom = 0.44773
+offset_left = 0.12793
+offset_top = -0.296005
+offset_right = 0.507996
+offset_bottom = -0.295013
+script = ExtResource("8_4hxnk")
+metadata/_edit_use_anchors_ = true
+
+[node name="Name" type="Label" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan"]
+layout_mode = 0
+offset_top = -45.0
+offset_right = 215.0
+theme_override_font_sizes/font_size = 30
+text = "Extractor Fan"
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 65
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 65
+
+[node name="HSlider" type="HSlider" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan/Panel/MarginContainer"]
+layout_mode = 2
+tick_count = 10
+ticks_on_borders = true
+
+[node name="MinRPMLabel" type="Label" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "0 RPM"
+
+[node name="MaxRPMLabel" type="Label" parent="MarginContainer/TabContainer/Cooktops/ExtractionFan/Panel/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "3000 RPM"
+
+[connection signal="pressed" from="MarginContainer/TabContainer/Sequence/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/Patty1FeedServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_patty1feed_position_write_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/KetchupServo/PositionWriteButton" to="MarginContainer/TabContainer/Magazines" method="_on_ketchup_position_write_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/ZeroButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_zero_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/RetractButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_retract_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Magazines/BreadServo/ExtendButton" to="MarginContainer/TabContainer/Magazines" method="_on_bun_extend_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/Patty1SliceServo/ZeroButton" to="MarginContainer/TabContainer/Axes" method="_on_patty1_slicer_zero_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/Patty1SliceServo/RetractButton" to="MarginContainer/TabContainer/Axes" method="_on_patty1_slice_retract_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/Patty1SliceServo/ExtendButton" to="MarginContainer/TabContainer/Axes" method="_on_patty1_slice_extend_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/OvenServo/ZeroButton" to="MarginContainer/TabContainer/Axes" method="_on_oven_zero_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/OvenServo/DownPosButton" to="MarginContainer/TabContainer/Axes" method="_on_oven_down_pos_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/OvenServo/ReadyPosButton" to="MarginContainer/TabContainer/Axes" method="_on_oven_ready_pos_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/OvenServo/CookPosButton" to="MarginContainer/TabContainer/Axes" method="_on_oven_cook_pos_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/BurgerGripperServo/ZeroButton" to="MarginContainer/TabContainer/Axes" method="_on_gripper_zero_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/BurgerGripperServo/CloseButton" to="MarginContainer/TabContainer/Axes" method="_on_gripper_close_button_pressed"]
+[connection signal="pressed" from="MarginContainer/TabContainer/Axes/BurgerGripperServo/OpenButton" to="MarginContainer/TabContainer/Axes" method="_on_gripper_open_button_pressed"]
+[connection signal="value_changed" from="MarginContainer/TabContainer/Cooktops/ExtractionFan/Panel/MarginContainer/HSlider" to="MarginContainer/TabContainer/Cooktops/ExtractionFan" method="SetSpeed"]
