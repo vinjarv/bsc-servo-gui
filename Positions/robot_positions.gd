@@ -32,7 +32,8 @@ var TOOL2_RETURN3 = 	Vector3(-462, 61, 50)		# Down and clear
 var TOOL2_RETURN4 = 	Vector3(-426, 61, 50)		# Away
 
 # Meat magazine
-var SLICE_MAG1_PICKUP = Vector3(-146, 204, 247) 		# Under meat magazine 1
+#var SLICE_MAG1_PICKUP = Vector3(-146, 204, 247) 		# Under meat magazine 1 - Makes oval patties
+var SLICE_MAG1_PICKUP = Vector3(-181, 204, 226)
 
 # Cooking station
 var COOK_APPROACH1 = 	Vector3(0, 0, 874)		# From home to height
@@ -44,7 +45,7 @@ var COOK_INSIDE2 = 		Vector3(-262, 130, 893)		# Inside, pressed against the top
 var GRIPPER_APPROACH1_T1 = 	Vector3(-2, 0, 662)	
 var GRIPPER_APPROACH2_T1 = 	Vector3(-2, 193, 662)	
 var GRIPPER_UNDER_T1 = 		Vector3(-2, 193, 662)	
-var GRIPPER_INSIDE_T1 = 	Vector3(-2, 193, 697)	
+var GRIPPER_INSIDE_T1 = 	Vector3(-2, 193, 700)	
 var GRIPPER_APPROACH1_T2 =  Vector3(-26, 0, 673)	
 var GRIPPER_APPROACH2_T2 = 	Vector3(-26, 202, 673)	
 var GRIPPER_UNDER_T2 = 		Vector3(-26, 202, 670)	

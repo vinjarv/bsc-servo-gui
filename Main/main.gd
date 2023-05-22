@@ -31,7 +31,7 @@ var seq_timer : Timer = Timer.new()
 var burger_removed : bool = false 	# For signaling that sequence is complete
 var start_requested : bool = false  # For signaling
 
-@export var patty_feed_amount_mm : float = 12.0		# Distance to feed per portion
+@export var patty_feed_amount_mm : float = 13.0		# Distance to feed per portion
 @export var ketchup_feed_amount_mm : float = 2.0 	# Distance to feed per portion
 @export var ketchup_feedrate : float = 2.0
 @export var fast_feedrate : float = 600.0 			# mm/s for fast travel moves
@@ -44,7 +44,7 @@ var ketchup_retract = 3.0 # mm
 @onready var step_edit : LineEdit = $MarginContainer/TabContainer/Sequence/StepEdit
 
 # Debug variables
-var cooking_enabled : bool = false
+var cooking_enabled : bool = true
 
 func _ready():
 	var ports = SerialHub.GetSerialPorts()
@@ -174,9 +174,9 @@ func _process(delta):
 			if oven_servo.IsAt(servo_positions.OVEN_READY, servo_tolerence):
 				state = 25
 		25:
-			seq_timer.start(4.0)
+			seq_timer.start(10.0)
 			if cooking_enabled:
-				lower_induction.SetPower(1500)
+				lower_induction.SetPower(2000)
 			state = 26
 		26:
 			state_text = "Moving to burger patty magazine"
@@ -204,15 +204,15 @@ func _process(delta):
 			if robot.IsAt(robot_positions.SLICE_MAG1_PICKUP, robot_tolerence):
 				state = 33
 		33:
-			patty1_slice_servo.SetAcceleration(1000)
-			patty1_slice_servo.SetVelocity(150)
+			patty1_slice_servo.SetAcceleration(1500)
+			patty1_slice_servo.SetVelocity(450)
 			patty1_slice_servo.Move(servo_positions.PATTY1_SLICE_EXTENDED)
 			state = 34
 		34: 
 			state_text = "Slicing patty"
 			if patty1_slice_servo.IsAt(servo_positions.PATTY1_SLICE_EXTENDED, servo_tolerence):
 				state = 35
-				seq_timer.start(3.5) # Delay for burger to fall
+				seq_timer.start(10) # Delay for burger to fall
 		35:
 			if seq_timer.is_stopped():
 				state = 36
@@ -222,7 +222,9 @@ func _process(delta):
 			state = 37
 		37:
 			if patty1_slice_servo.IsAt(servo_positions.PATTY1_SLICE_RETRACTED, servo_tolerence):
-				state = 38
+				#state = 38
+				#TODO enable again
+				state = 40
 		38:
 			# Feed next slice
 			patty1_feed_servo.SetAcceleration(100)
@@ -258,7 +260,7 @@ func _process(delta):
 			else:
 				print("[DEBUG] Upper induction 2000W")
 			extraction_fan.SetSpeed(100)
-			seq_timer.start(3.0)
+			seq_timer.start(10.0)
 			state = 47
 		47:
 			if seq_timer.is_stopped():
@@ -267,17 +269,17 @@ func _process(delta):
 			# Start cooking
 			state_text = "Cooking - high power"
 			if cooking_enabled:
-				upper_induction.SetPower(1000)
-				lower_induction.SetPower(1500)
+				upper_induction.SetPower(1600)
+				lower_induction.SetPower(1600)
 			else:
-				print("[DEBUG] Upper induction 1000W")
-				print("[DEBUG] Lower induction 1500W")
+				print("[DEBUG] Upper induction 1600W")
+				print("[DEBUG] Lower induction 1600W")
 			state = 49
 		49:
 			# Press burger against top
 			oven_servo.Move(servo_positions.OVEN_COOK)
 			robot.MoveVelocity(robot_positions.COOK_INSIDE2, 50) 	# Move to match speed of servo
-			seq_timer.start(5)										# Cook time 1
+			seq_timer.start(35)										# Cook time 1
 			state = 50
 		50:
 			if seq_timer.is_stopped():
@@ -286,12 +288,12 @@ func _process(delta):
 			# Lower power
 			state_text = "Cooking - holding at lower power"
 			if cooking_enabled:
-				upper_induction.SetPower(1200)
-				lower_induction.SetPower(1200)
+				upper_induction.SetPower(1300)
+				lower_induction.SetPower(1300)
 			else:
-				print("[DEBUG] Upper induction 1200W")
-				print("[DEBUG] Lower induction 1200W")
-			seq_timer.start(5)										# Cook time 2
+				print("[DEBUG] Upper induction 1300W")
+				print("[DEBUG] Lower induction 1300W")
+			seq_timer.start(40)										# Cook time 2
 			state = 52
 		52:
 			if seq_timer.is_stopped():
@@ -299,12 +301,12 @@ func _process(delta):
 		53:
 			# Raise top power last seconds
 			if cooking_enabled:
-				lower_induction.SetPower(1000)
+				lower_induction.SetPower(1400)
 				upper_induction.SetPower(1600)
 			else:
-				print("[DEBUG] Lower induction 1000W")
+				print("[DEBUG] Lower induction 1400W")
 				print("[DEBUG] Upper induction 1600W")
-			seq_timer.start(5)										# Cook time 3
+			seq_timer.start(15)										# Cook time 3
 			state = 54
 		54:
 			state_text = "Cooking - finishing"
@@ -432,8 +434,8 @@ func _process(delta):
 			extraction_fan.SetSpeed(0)
 		101:
 			robot.MoveVelocity(robot_positions.BUN_MAG1_UNDER, slow_feedrate)
-			bread_servo.SetAcceleration(1500)
-			bread_servo.SetVelocity(200)
+			bread_servo.SetAcceleration(1000)
+			bread_servo.SetVelocity(100)
 			bread_servo.Move(servo_positions.BUN_EXTENDED)
 			state = 102
 		102:
@@ -443,8 +445,8 @@ func _process(delta):
 			if bread_servo.IsAt(servo_positions.BUN_EXTENDED, servo_tolerence):
 				state = 105
 		105:
-			bread_servo.SetAcceleration(3000)
-			bread_servo.SetVelocity(600)
+			bread_servo.SetAcceleration(5000)
+			bread_servo.SetVelocity(1200)
 			bread_servo.Move(servo_positions.BUN_RETRACTED)
 			seq_timer.start(1.5)
 			state = 106
@@ -480,25 +482,30 @@ func _process(delta):
 			state = 116
 		116:
 			if gripper_servo.IsAt(servo_positions.GRIPPER_OPEN, servo_tolerence):
-				seq_timer.start(1.0)
+				seq_timer.start(2.0)
 				state = 117
 		117:
 			if seq_timer.is_stopped():
 				state = 118
 		118:
-			gripper_servo.Move(servo_positions.GRIPPER_CLOSED)
 			robot.MoveVelocity(robot_positions.GRIPPER_APPROACH2_T2, slow_feedrate)
 			state = 119
 		119:
 			robot.MoveVelocity(robot_positions.GRIPPER_APPROACH1_T2, slow_feedrate)
-			state = 121
+			state = 120
+		120:
+			if robot.IsAt(robot_positions.GRIPPER_APPROACH2_T2, slow_feedrate):
+				state = 121
 		121:
+			gripper_servo.Move(servo_positions.GRIPPER_CLOSED)
 			robot.MoveVelocity(robot_positions.HOME, slow_feedrate)
 			state = 122
 		122:
 			if robot.IsAt(robot_positions.HOME, robot_tolerence):
 				if true: #TODO add ketchup option check
 					state = 130
+				else:
+					state = 140
 
 		130:
 			state_text = "Adding ketchup"
@@ -513,14 +520,14 @@ func _process(delta):
 			ketchup_servo.SetAcceleration(100)
 			ketchup_servo.SetVelocity(ketchup_feedrate)
 			ketchup_servo.Move(ketchup_servo.GetPosition() + ketchup_retract)
-			seq_timer.start(2.0)
-			state = 100033
+			seq_timer.start(0.8)
+			state = 10033
 		10033:
 			if seq_timer.is_stopped():
 				state = 132
 		132:
 			ketchup_servo.Move(ketchup_servo.GetPosition() + ketchup_feed_amount_mm)
-			seq_timer.start(0.5) 							# Ketchup delay
+			seq_timer.start(0.2) 							# Ketchup delay
 			state = 133
 		133:
 			if seq_timer.is_stopped():
@@ -550,8 +557,8 @@ func _process(delta):
 			state = 141
 		141:
 			robot.MoveVelocity(robot_positions.BUN_MAG1_UNDER, slow_feedrate)
-			bread_servo.SetAcceleration(1500)
-			bread_servo.SetVelocity(200)
+			bread_servo.SetAcceleration(1000)
+			bread_servo.SetVelocity(100)
 			bread_servo.Move(servo_positions.BUN_EXTENDED)
 			state = 142
 		142:
@@ -561,8 +568,8 @@ func _process(delta):
 			if bread_servo.IsAt(servo_positions.BUN_EXTENDED, servo_tolerence):
 				state = 145
 		145:
-			bread_servo.SetAcceleration(3000)
-			bread_servo.SetVelocity(600)
+			bread_servo.SetAcceleration(5000)
+			bread_servo.SetVelocity(1200)
 			bread_servo.Move(servo_positions.BUN_RETRACTED)
 			seq_timer.start(1.5)
 			state = 10046
